@@ -1,0 +1,7 @@
+{
+  "name": "shiroh-merchants",
+  "private": true,
+  "description": "Shiroh Merchants online shop with WhatsApp ordering and M-Pesa payments",
+  "engines": { "node": ">=18" },
+  "scripts": { "test": "node test/api.test.js" }
+}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Shiroh Orders</title>
+<style>
+:root{--bg:#F5F6F8;--surface:#fff;--ink:#16233F;--muted:#5C667A;--line:#DDE1E8;--accent:#E59A2F;--ok:#1E8A55;--warn:#B4541C}
+@media (prefers-color-scheme:dark){:root{--bg:#0F1522;--surface:#18202F;--ink:#E9EDF4;--muted:#9AA4B6;--line:#2A3446;--accent:#F0AE4E;--ok:#47C186;--warn:#F08A55;color-scheme:dark}}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+main{max-width:1100px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-left,0px))}
+h1{margin:0 0 16px}
+form{display:flex;gap:8px;flex-wrap:wrap}
+input,select,button{font:inherit;color:inherit;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--surface)}
+button{background:var(--accent);color:#1B1206;font-weight:700;border:0;cursor:pointer}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:16px 0}
+.o{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;display:grid;grid-template-columns:1fr auto;gap:8px}
+.o h3{margin:0;font-size:1rem}
+.m{color:var(--muted);font-size:.88rem}
+.pill{display:inline-block;border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;background:var(--line)}
+.paid{background:var(--ok);color:#fff}.payment_failed,.cancelled{background:var(--warn);color:#fff}.dispatched{background:var(--accent);color:#1B1206}
+ul{margin:6px 0;padding-left:18px}
+.err{color:var(--warn)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Shiroh orders</h1>
+  <form id="login"><input id="pw" type="password" placeholder="Admin password" autocomplete="current-password" aria-label="Admin password"><button>Show orders</button></form>
+  <p class="err" id="err" hidden></p>
+  <div id="app" hidden>
+    <div class="bar">
+      <label>Show <select id="filter"><option value="">All orders</option><option value="paid">Paid, to dispatch</option><option value="awaiting_payment">Awaiting payment</option><option value="dispatched">Dispatched</option><option value="delivered">Delivered</option><option value="payment_failed">Payment failed</option></select></label>
+      <button id="refresh" type="button">Refresh</button>
+      <span class="m" id="sum"></span>
+    </div>
+    <div id="list"></div>
+  </div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const fmt=n=>"KSh "+Math.round(n).toLocaleString("en-KE");
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LABEL={awaiting_payment:"Awaiting payment",paid:"Paid",payment_failed:"Payment failed",dispatched:"Dispatched",delivered:"Delivered",cancelled:"Cancelled"};
+let pw="",orders=[];
+async function api(method,body){
+  const r=await fetch("api/orders",{method,headers:{"x-admin-password":pw,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});
+  const j=await r.json();if(!r.ok)throw new Error(j.error);return j;
+}
+async function load(){
+  try{orders=(await api("GET")).orders;$("err").hidden=true;$("app").hidden=false;draw()}
+  catch(e){$("err").hidden=false;$("err").textContent=e.message}
+}
+function draw(){
+  const f=$("filter").value;const list=orders.filter(o=>!f||o.status===f);
+  const paid=orders.filter(o=>["paid","dispatched","delivered"].includes(o.status));
+  $("sum").textContent=`${orders.length} orders · ${fmt(paid.reduce((s,o)=>s+(o.amountPaid||o.total),0))} paid`;
+  $("list").innerHTML=list.map(o=>`<div class="o"><div>
+    <h3>${o.id} <span class="pill ${o.status}">${LABEL[o.status]}</span></h3>
+    <div class="m">${new Date(o.createdAt).toLocaleString("en-KE")} · ${esc(o.customer.name)} · ${esc(o.customer.phone)}${o.mpesaReceipt?` · M-Pesa ${esc(o.mpesaReceipt)}`:""}</div>
+    <ul>${o.lines.map(l=>`<li>${l.qty} × ${esc(l.name)} = ${fmt(l.total)}</li>`).join("")}</ul>
+    <div class="m">${o.delivery==="pickup"?"Pick up in store":esc(`${o.delivery} delivery: ${o.customer.address}, ${o.customer.area}, ${o.customer.town}`)}</div>
+    </div><div style="text-align:right"><strong>${fmt(o.total)}</strong><br>
+    <select data-id="${o.id}" aria-label="Change status">${Object.entries(LABEL).map(([k,v])=>`<option value="${k}" ${k===o.status?"selected":""}>${v}</option>`).join("")}</select></div></div>`).join("")||`<p class="m">No orders here yet.</p>`;
+}
+$("login").onsubmit=e=>{e.preventDefault();pw=$("pw").value;load()};
+$("refresh").onclick=load;$("filter").onchange=draw;
+$("list").onchange=async e=>{const s=e.target.closest("select[data-id]");if(!s)return;
+  try{const {order}=await api("POST",{id:s.dataset.id,status:s.value});orders=orders.map(o=>o.id===order.id?order:o);draw()}catch(err){$("err").hidden=false;$("err").textContent=err.message}};
+</script>
+</body>
+</html>
