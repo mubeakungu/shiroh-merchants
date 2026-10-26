@@ -214,7 +214,7 @@ footer span{opacity:.75}
   <section class="promo" id="promo">
     <div class="main">
       <h1>Everything for the home, the farm table and the wardrobe.</h1>
-      <p>Kienyeji chicken to sofas, medicine to solar panels. Order online, confirm on WhatsApp, and pay by M-Pesa or on delivery. Free delivery over KSh 5,000.</p>
+      <p>Kienyeji chicken to sofas, rose bouquets to solar panels. Order online, confirm on WhatsApp, and pay by M-Pesa or on delivery. Free delivery over KSh 5,000.</p>
     </div>
     <div class="side"><strong>Need a doctor, cleaner, fumigator or solar installer?</strong><span>Book a call and an expert phones you back.</span><br><button class="expertbtn" id="promoExpert" type="button">Talk to an expert</button></div>
     <div class="side"><strong>10% off your first order</strong><span>Enter <code class="k">SHIROH10</code> in your cart.</span></div>
@@ -657,6 +657,7 @@ function openProduct(id){
   const p=byId[id];
   const st=p.stock===0?`<span class="stock low">Sold out</span>`:p.stock<=5?`<span class="stock low">Only ${p.stock} left in stock</span>`:`<span class="stock yes">In stock</span>`;
   const blurb={clothing:"Easy care fabric, true to size. Free exchange within 7 days.",food:"Fresh stock delivered in insulated bags. Best before date of at least 5 days.",electronics:"Genuine product with a 1 year manufacturer warranty.",utensils:"Food-safe materials, dishwasher friendly unless stated.",appliances:"1 year warranty. Free installation in Nairobi for large appliances.",furniture:"Delivered and assembled at no extra cost.",beauty:"Sealed and authentic. Patch test before first use.",jewelry:"Comes in a gift box. Hypoallergenic finish.",watches:"Water resistant to 30 m. 1 year warranty.",movies:"Region-free disc with English subtitles.",
+    flowers:"Fresh-cut Kenyan flowers. Same-day delivery in Nairobi when you order before 2pm. Send your card message with your order on WhatsApp.",
     games:"Original, sealed products. Consoles come with a 1 year warranty and digital codes are sent by SMS.",detergents:"Keep out of reach of children.",
     farm:"Grown and raised by local smallholder farmers. Harvested or collected within 48 hours of delivery.",
     pharmacy:p.kind==="rx"?"Prescription medicine. Send a photo of your prescription on WhatsApp after you order. Dispensed by a registered pharmacist.":"Genuine medicine from licensed suppliers. Read the leaflet and ask a pharmacist if unsure.",

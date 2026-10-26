@@ -3,7 +3,7 @@ var DEPTS = {
   services:["Services",230], farm:["Home-grown & Farm Fresh",95], food:["Food & Groceries",110], pharmacy:["Pharmacy & Health",150],
   clothing:["Clothing",265], electronics:["Electronics",210], solar:["Solar",52],
   utensils:["Kitchen & Utensils",25], appliances:["Home Appliances",190], furniture:["Furniture",35],
-  beauty:["Beauty",330], jewelry:["Jewelry",48], watches:["Watches",0], movies:["Movies",285], games:["Games",245], detergents:["Detergents & Cleaning",170]
+  beauty:["Beauty",330], flowers:["Flowers & Bouquets",345], jewelry:["Jewelry",48], watches:["Watches",0], movies:["Movies",285], games:["Games",245], detergents:["Detergents & Cleaning",170]
 };
 
 // expert desks a customer can book a call with
@@ -219,5 +219,20 @@ var RAW = [
  ["Toilet cleaner, 750 ml","detergents","Bathroom","all",320,0,"🚽",4.4,70],
  ["Multi-surface cleaner spray","detergents","Household","all",390,0,"✨",4.3,65],
  ["Hand wash refill, 1 L","detergents","Bathroom","all",350,0,"🧼",4.5,0],
+ ["Red roses bouquet, 12 stems","flowers","Bouquets","all",2500,3000,"🌹",4.8,30],
+ ["Red roses bouquet, 24 stems","flowers","Bouquets","all",4500,0,"🌹",4.9,20],
+ ["Mixed flower bouquet","flowers","Bouquets","all",2200,0,"💐",4.7,30],
+ ["Sunflower bouquet","flowers","Bouquets","all",2400,0,"🌻",4.7,20],
+ ["White lilies bouquet","flowers","Bouquets","all",2800,0,"🤍",4.6,15],
+ ["Pink roses & carnations bouquet","flowers","Bouquets","all",2600,0,"🌸",4.7,20],
+ ["Roses & chocolate gift box","flowers","Gift boxes","all",4200,4800,"🎁",4.8,15],
+ ["Birthday flower box with balloon","flowers","Gift boxes","all",3800,0,"🎈",4.6,12],
+ ["Single wrapped rose","flowers","Bouquets","all",300,0,"🌹",4.5,100],
+ ["Bridal bouquet","flowers","Weddings","Women",6500,0,"👰🏾",4.9,6],
+ ["Groom's buttonhole flower","flowers","Weddings","Men",500,0,"🤵🏾",4.6,20],
+ ["Funeral wreath","flowers","Sympathy","all",5500,0,"🕊️",4.8,8],
+ ["Get-well flower basket","flowers","Sympathy","all",3200,0,"🧺",4.6,10],
+ ["Potted orchid","flowers","Plants","all",3500,0,"🪻",4.7,10],
+ ["Glass flower vase","flowers","Accessories","all",900,0,"🏺",4.4,25],
 ];
 if (typeof module !== "undefined") module.exports = { DEPTS, TOPICS, RAW };
