@@ -216,7 +216,7 @@ footer span{opacity:.75}
       <h1>Everything for the home, the farm table and the wardrobe.</h1>
       <p>Kienyeji chicken to sofas, rose bouquets to solar panels. Order online, confirm on WhatsApp, and pay by M-Pesa or on delivery. Free delivery over KSh 5,000.</p>
     </div>
-    <div class="side"><strong>Need a doctor, cleaner, fumigator or solar installer?</strong><span>Book a call and an expert phones you back.</span><br><button class="expertbtn" id="promoExpert" type="button">Talk to an expert</button></div>
+    <div class="side"><strong>Need a doctor, network engineer, web designer or solar installer?</strong><span>Book a call and an expert phones you back.</span><br><button class="expertbtn" id="promoExpert" type="button">Talk to an expert</button></div>
     <div class="side"><strong>10% off your first order</strong><span>Enter <code class="k">SHIROH10</code> in your cart.</span></div>
   </section>
 
@@ -338,6 +338,7 @@ function filtered(){
   const s={pop:(a,b)=>b.pop-a.pop,low:(a,b)=>a.price-b.price,high:(a,b)=>b.price-a.price,rate:(a,b)=>b.rating-a.rating,az:(a,b)=>a.name.localeCompare(b.name)}[S.sort];
   return list.sort(s);
 }
+const askText = p => p.dept==="networking"?"Ask an expert about setup & configuration":"Ask an expert about installation";
 const fromPrice = p => p.price===0?"Free":"From "+fmt(p.price);
 function card(p){
   const inCart=cart[p.id];
@@ -352,7 +353,7 @@ function card(p){
     </div></article>`;
   const tag = p.stock===0?`<span class="tag">Sold out</span>`:p.was?`<span class="tag sale">-${Math.round((1-p.price/p.was)*100)}%</span>`:p.kind==="rx"?`<span class="tag rx">Prescription</span>`:p.dept==="farm"?`<span class="tag farm">Home-grown</span>`:p.stock<=5?`<span class="tag">Only ${p.stock} left</span>`:"";
   const gl = p.gender!=="all"?` · ${p.gender}`:"";
-  const ask = p.kind==="exp"?`<button class="ask" data-expert="${p.topic}">Ask an expert about installation</button>`:p.kind==="rx"?`<button class="ask" data-expert="pharmacist">Ask a pharmacist</button>`:"";
+  const ask = p.kind==="exp"?`<button class="ask" data-expert="${p.topic}">${askText(p)}</button>`:p.kind==="rx"?`<button class="ask" data-expert="pharmacist">Ask a pharmacist</button>`:"";
   return `<article class="card">
     <button class="thumb" style="${tileBg(p.dept)}" data-view="${p.id}" aria-label="View ${esc(p.name)}">${tag}<span aria-hidden="true">${p.emoji}</span></button>
     <div class="info">
@@ -620,7 +621,7 @@ function openExpert(topic,svcId){
     <button class="cta" type="submit">Continue to WhatsApp</button>
     <p class="note" style="margin:0">Your request is sent to us as a WhatsApp message, and an expert gets back to you.</p>
   </form></div>`;
-  const hints={medical:"Symptoms, how long you've had them, age of the patient",pharmacist:"Medicine name, what it's for, any other medicines you take",network:"Home or office, number of rooms or users, cameras needed",cleaning:"House size, rooms, carpets or sofas to clean",pest:"Type of pest, house size, rooms affected",solar:"Monthly electricity bill, appliances you want to power, roof type"};
+  const hints={software:"What you need built, who will use it, features, deadline and budget",medical:"Symptoms, how long you've had them, age of the patient",pharmacist:"Medicine name, what it's for, any other medicines you take",network:"Home or office, number of rooms or users, cameras needed",cleaning:"House size, rooms, carpets or sofas to clean",pest:"Type of pest, house size, rooms affected",solar:"Monthly electricity bill, appliances you want to power, roof type"};
   const sync=()=>{
     const t=$("x-topic").value;
     const opts=t?svcOpts(t):"";
@@ -656,7 +657,8 @@ function openExpert(topic,svcId){
 function openProduct(id){
   const p=byId[id];
   const st=p.stock===0?`<span class="stock low">Sold out</span>`:p.stock<=5?`<span class="stock low">Only ${p.stock} left in stock</span>`:`<span class="stock yes">In stock</span>`;
-  const blurb={clothing:"Easy care fabric, true to size. Free exchange within 7 days.",food:"Fresh stock delivered in insulated bags. Best before date of at least 5 days.",electronics:"Genuine product with a 1 year manufacturer warranty.",utensils:"Food-safe materials, dishwasher friendly unless stated.",appliances:"1 year warranty. Free installation in Nairobi for large appliances.",furniture:"Delivered and assembled at no extra cost.",beauty:"Sealed and authentic. Patch test before first use.",jewelry:"Comes in a gift box. Hypoallergenic finish.",watches:"Water resistant to 30 m. 1 year warranty.",movies:"Region-free disc with English subtitles.",
+  const blurb={clothing:"Easy care fabric, true to size. Free exchange within 7 days.",food:"Fresh stock delivered in insulated bags. Best before date of at least 5 days.",electronics:"Genuine product with a 1 year manufacturer warranty.",
+    networking:"Genuine business-grade equipment with warranty. Our engineers can configure and install it for you.",utensils:"Food-safe materials, dishwasher friendly unless stated.",appliances:"1 year warranty. Free installation in Nairobi for large appliances.",furniture:"Delivered and assembled at no extra cost.",beauty:"Sealed and authentic. Patch test before first use.",jewelry:"Comes in a gift box. Hypoallergenic finish.",watches:"Water resistant to 30 m. 1 year warranty.",movies:"Region-free disc with English subtitles.",
     flowers:"Fresh-cut Kenyan flowers. Same-day delivery in Nairobi when you order before 2pm. Send your card message with your order on WhatsApp.",
     games:"Original, sealed products. Consoles come with a 1 year warranty and digital codes are sent by SMS.",detergents:"Keep out of reach of children.",
     farm:"Grown and raised by local smallholder farmers. Harvested or collected within 48 hours of delivery.",
@@ -686,7 +688,7 @@ function openProduct(id){
       <div style="display:flex;gap:10px;align-items:center;margin-top:6px">
         <div class="qty"><button id="mm" aria-label="Decrease">−</button><span id="mq">1</span><button id="mp" aria-label="Increase">+</button></div>
         <button class="cta" id="madd" style="flex:1" ${p.stock===0?"disabled":""}>Add to cart</button></div>
-      ${p.kind?`<button class="ask" id="mask" style="font-size:.9rem">${p.kind==="rx"?"Ask a pharmacist":"Talk to an expert about installation"}</button>`:""}
+      ${p.kind?`<button class="ask" id="mask" style="font-size:.9rem">${p.kind==="rx"?"Ask a pharmacist":askText(p)}</button>`:""}
     </div>`;
   if(p.kind) $("mask").onclick=()=>openExpert(p.kind==="rx"?"pharmacist":p.topic);
   let n=1;

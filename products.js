@@ -1,14 +1,14 @@
 // Shared catalogue: loaded by the shop page and by the payment API so prices can't be changed in the browser.
 var DEPTS = {
   services:["Services",230], farm:["Home-grown & Farm Fresh",95], food:["Food & Groceries",110], pharmacy:["Pharmacy & Health",150],
-  clothing:["Clothing",265], electronics:["Electronics",210], solar:["Solar",52],
+  clothing:["Clothing",265], electronics:["Electronics",210], networking:["Networking & IT",200], solar:["Solar",52],
   utensils:["Kitchen & Utensils",25], appliances:["Home Appliances",190], furniture:["Furniture",35],
   beauty:["Beauty",330], flowers:["Flowers & Bouquets",345], jewelry:["Jewelry",48], watches:["Watches",0], movies:["Movies",285], games:["Games",245], detergents:["Detergents & Cleaning",170]
 };
 
 // expert desks a customer can book a call with
 var TOPICS = {
-  medical:"Doctor or nurse", pharmacist:"Pharmacist", network:"Networking & security",
+  medical:"Doctor or nurse", pharmacist:"Pharmacist", network:"Networking & security", software:"Web design & software",
   cleaning:"Home cleaning", pest:"Pest control", solar:"Solar purchase & installation"
 };
 
@@ -234,5 +234,27 @@ var RAW = [
  ["Get-well flower basket","flowers","Sympathy","all",3200,0,"🧺",4.6,10],
  ["Potted orchid","flowers","Plants","all",3500,0,"🪻",4.7,10],
  ["Glass flower vase","flowers","Accessories","all",900,0,"🏺",4.4,25],
+ ["Network design & site survey","services","Networking & IT","all",8000,0,"🗺️",4.8,999,"svc","network"],
+ ["Network installation & structured cabling","services","Networking & IT","all",15000,0,"🔌",4.7,999,"svc","network"],
+ ["24/7 network monitoring (monthly)","services","Networking & IT","all",6000,0,"📊",4.7,999,"svc","network"],
+ ["Firewall, switch & router configuration","services","Networking & IT","all",5000,0,"⚙️",4.8,999,"svc","network"],
+ ["IT support & maintenance (monthly)","services","Networking & IT","all",10000,0,"🧑🏾‍💻",4.6,999,"svc","network"],
+ ["Business website design","services","Web & software","all",25000,30000,"🖥️",4.8,999,"svc","software"],
+ ["Online shop (e-commerce) website","services","Web & software","all",60000,0,"🛒",4.7,999,"svc","software"],
+ ["Custom software development","services","Web & software","all",100000,0,"💾",4.7,999,"svc","software"],
+ ["Mobile app development (Android & iOS)","services","Web & software","all",150000,0,"📱",4.6,999,"svc","software"],
+ ["Website hosting & maintenance (monthly)","services","Web & software","all",2500,0,"🌐",4.5,999,"svc","software"],
+ ["Next-generation firewall, small office","networking","Firewalls","all",65000,72000,"🧱",4.7,6,"exp","network"],
+ ["Enterprise firewall appliance","networking","Firewalls","all",185000,0,"🛡️",4.8,3,"exp","network"],
+ ["8-port gigabit switch, unmanaged","networking","Switches","all",3500,0,"🔀",4.5,30,"exp","network"],
+ ["24-port managed PoE switch","networking","Switches","all",48000,0,"🔀",4.7,8,"exp","network"],
+ ["48-port managed core switch","networking","Switches","all",115000,0,"🗄️",4.7,3,"exp","network"],
+ ["Business VPN router, dual WAN","networking","Routers","all",22000,0,"📡",4.6,10,"exp","network"],
+ ["4G LTE router","networking","Routers","all",8500,9500,"📶",4.4,20,"exp","network"],
+ ["Wi-Fi 6 mesh system, 3 pack","networking","Wireless","all",28000,0,"📶",4.6,12,"exp","network"],
+ ["Ceiling access point, Wi-Fi 6","networking","Wireless","all",14500,0,"📡",4.6,15,"exp","network"],
+ ["Server rack cabinet, 12U","networking","Racks & cabling","all",18000,0,"🗄️",4.5,6,"exp","network"],
+ ["Cat6 cable, 305 m box","networking","Racks & cabling","all",16500,0,"🧶",4.6,15,"exp","network"],
+ ["UPS 1500 VA for network gear","networking","Power","all",19500,0,"🔋",4.5,10,"exp","network"],
 ];
 if (typeof module !== "undefined") module.exports = { DEPTS, TOPICS, RAW };

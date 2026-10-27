@@ -1,6 +1,6 @@
 # Shiroh Merchants
 
-An all-in-one online shop: farm-fresh produce, groceries, pharmacy, clothing, flowers, electronics, solar, home goods, games and expert services.
+An all-in-one online shop: farm-fresh produce, groceries, pharmacy, clothing, flowers, electronics, networking gear, solar, home goods, games, and expert services including networking, web design and software development.
 
 - **Orders by WhatsApp** work anywhere, including GitHub Pages. Checkout opens a ready-made WhatsApp message to 0110 291 686, and expert requests go to 0715 342 011.
 - **Pay now with M-Pesa** (STK push) appears at checkout only when the site runs on Vercel with the payment settings below. On GitHub Pages it stays hidden.
